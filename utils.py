@@ -12,6 +12,7 @@ except ImportError:
 
 def get_clipvision_file(preset):
     preset = preset.lower()
+    print(f"[DEBUG] get_clipvision_file preset: {preset}")
     clipvision_dirs = folder_paths.get_folder_paths("clip_vision")
     print(f"[DEBUG] Searching clip_vision in: {clipvision_dirs}")
     clipvision_list = folder_paths.get_filename_list("clip_vision")
@@ -26,15 +27,16 @@ def get_clipvision_file(preset):
     clipvision_file = [e for e in clipvision_list if re.search(pattern, e, re.IGNORECASE)]
     if clipvision_file:
         clipvision_file = folder_paths.get_full_path("clip_vision", clipvision_file[0])
-        print(f"[DEBUG] Selected clip_vision file: {clipvision_file}")
+        print(f"[DEBUG] Selected clip_vision file for '{preset}': {clipvision_file}")
     else:
         clipvision_file = None
-        print("[DEBUG] No clip_vision file matched the preset")
+        print(f"[DEBUG] No clip_vision file matched preset '{preset}' using pattern '{pattern}'")
 
     return clipvision_file
 
 def get_ipadapter_file(preset, is_sdxl):
     preset = preset.lower()
+    print(f"[DEBUG] get_ipadapter_file preset: {preset}, is_sdxl: {is_sdxl}")
     ipadapter_dirs = folder_paths.get_folder_paths("ipadapter")
     print(f"[DEBUG] Searching ipadapter in: {ipadapter_dirs}")
     ipadapter_list = folder_paths.get_filename_list("ipadapter")
@@ -127,14 +129,15 @@ def get_ipadapter_file(preset, is_sdxl):
     ipadapter_file = [e for e in ipadapter_list if re.search(pattern, e, re.IGNORECASE)]
     if ipadapter_file:
         ipadapter_file = folder_paths.get_full_path("ipadapter", ipadapter_file[0])
-        print(f"[DEBUG] Selected ipadapter file: {ipadapter_file}")
+        print(f"[DEBUG] Selected ipadapter file for '{preset}': {ipadapter_file}")
     else:
         ipadapter_file = None
-        print("[DEBUG] No ipadapter file matched the preset")
+        print(f"[DEBUG] No ipadapter file matched preset '{preset}' using pattern '{pattern}'")
 
     return ipadapter_file, is_insightface, lora_pattern
 
 def get_lora_file(pattern):
+    print(f"[DEBUG] get_lora_file pattern: {pattern}")
     lora_dirs = folder_paths.get_folder_paths("loras")
     print(f"[DEBUG] Searching loras in: {lora_dirs}")
     lora_list = folder_paths.get_filename_list("loras")
@@ -142,10 +145,10 @@ def get_lora_file(pattern):
     lora_file = [e for e in lora_list if re.search(pattern, e, re.IGNORECASE)]
     if lora_file:
         lora_file = folder_paths.get_full_path("loras", lora_file[0])
-        print(f"[DEBUG] Selected lora file: {lora_file}")
+        print(f"[DEBUG] Selected lora file for pattern '{pattern}': {lora_file}")
     else:
         lora_file = None
-        print("[DEBUG] No lora file matched the pattern")
+        print(f"[DEBUG] No lora file matched pattern '{pattern}'")
 
     return lora_file
 
