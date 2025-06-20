@@ -12,7 +12,10 @@ except ImportError:
 
 def get_clipvision_file(preset):
     preset = preset.lower()
+    clipvision_dirs = folder_paths.get_folder_paths("clip_vision")
+    print(f"[DEBUG] Searching clip_vision in: {clipvision_dirs}")
     clipvision_list = folder_paths.get_filename_list("clip_vision")
+    print(f"[DEBUG] Available clip_vision files: {clipvision_list}")
 
     if preset.startswith("vit-g"):
         pattern = r'(ViT.bigG.14.*39B.b160k|ipadapter.*sdxl|sdxl.*model)\.(bin|safetensors)'
@@ -21,14 +24,21 @@ def get_clipvision_file(preset):
     else:
         pattern = r'(ViT.H.14.*s32B.b79K|ipadapter.*sd15|sd1.?5.*model)\.(bin|safetensors)'
     clipvision_file = [e for e in clipvision_list if re.search(pattern, e, re.IGNORECASE)]
-
-    clipvision_file = folder_paths.get_full_path("clip_vision", clipvision_file[0]) if clipvision_file else None
+    if clipvision_file:
+        clipvision_file = folder_paths.get_full_path("clip_vision", clipvision_file[0])
+        print(f"[DEBUG] Selected clip_vision file: {clipvision_file}")
+    else:
+        clipvision_file = None
+        print("[DEBUG] No clip_vision file matched the preset")
 
     return clipvision_file
 
 def get_ipadapter_file(preset, is_sdxl):
     preset = preset.lower()
+    ipadapter_dirs = folder_paths.get_folder_paths("ipadapter")
+    print(f"[DEBUG] Searching ipadapter in: {ipadapter_dirs}")
     ipadapter_list = folder_paths.get_filename_list("ipadapter")
+    print(f"[DEBUG] Available ipadapter files: {ipadapter_list}")
     is_insightface = False
     lora_pattern = None
 
@@ -115,14 +125,27 @@ def get_ipadapter_file(preset, is_sdxl):
         raise Exception(f"invalid type '{preset}'")
 
     ipadapter_file = [e for e in ipadapter_list if re.search(pattern, e, re.IGNORECASE)]
-    ipadapter_file = folder_paths.get_full_path("ipadapter", ipadapter_file[0]) if ipadapter_file else None
+    if ipadapter_file:
+        ipadapter_file = folder_paths.get_full_path("ipadapter", ipadapter_file[0])
+        print(f"[DEBUG] Selected ipadapter file: {ipadapter_file}")
+    else:
+        ipadapter_file = None
+        print("[DEBUG] No ipadapter file matched the preset")
 
     return ipadapter_file, is_insightface, lora_pattern
 
 def get_lora_file(pattern):
+    lora_dirs = folder_paths.get_folder_paths("loras")
+    print(f"[DEBUG] Searching loras in: {lora_dirs}")
     lora_list = folder_paths.get_filename_list("loras")
+    print(f"[DEBUG] Available lora files: {lora_list}")
     lora_file = [e for e in lora_list if re.search(pattern, e, re.IGNORECASE)]
-    lora_file = folder_paths.get_full_path("loras", lora_file[0]) if lora_file else None
+    if lora_file:
+        lora_file = folder_paths.get_full_path("loras", lora_file[0])
+        print(f"[DEBUG] Selected lora file: {lora_file}")
+    else:
+        lora_file = None
+        print("[DEBUG] No lora file matched the pattern")
 
     return lora_file
 
