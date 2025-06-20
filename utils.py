@@ -126,6 +126,7 @@ def get_ipadapter_file(preset, is_sdxl):
         raise Exception(f"invalid type '{preset}'")
 
     print (f"[DEBUG] pattern {pattern}")
+    print(f"DEBUG ipadapter_list {ipadapter_list}")
     print ("ipadapter_file = [e for e in ipadapter_list if re.search(pattern, e, re.IGNORECASE)]")
     ipadapter_file = [e for e in ipadapter_list if re.search(pattern, e, re.IGNORECASE)]
     if ipadapter_file:
