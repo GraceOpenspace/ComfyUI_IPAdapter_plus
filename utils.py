@@ -35,6 +35,7 @@ def get_clipvision_file(preset):
 
 def get_ipadapter_file(preset, is_sdxl):
     preset = preset.lower()
+    print (f"[DEBUG] Preset : {preset}")
     ipadapter_dirs = folder_paths.get_folder_paths("ipadapter")
     print(f"[DEBUG] Searching ipadapter in: {ipadapter_dirs}")
     ipadapter_list = folder_paths.get_filename_list("ipadapter")
@@ -124,6 +125,8 @@ def get_ipadapter_file(preset, is_sdxl):
     else:
         raise Exception(f"invalid type '{preset}'")
 
+    print (f"[DEBUG] pattern {pattern}")
+    print ("ipadapter_file = [e for e in ipadapter_list if re.search(pattern, e, re.IGNORECASE)]")
     ipadapter_file = [e for e in ipadapter_list if re.search(pattern, e, re.IGNORECASE)]
     if ipadapter_file:
         ipadapter_file = folder_paths.get_full_path("ipadapter", ipadapter_file[0])
